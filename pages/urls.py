@@ -1,14 +1,12 @@
-from django.urls import path
+from django.urls import path, include
 
-from .views import HomePageView, AboutPageView, BooksListPageView, BookDetailView
-from django.conf import settings
-from django.conf.urls.static import static
-# from .views import TradeView
-
+from .views import HomePageView, AboutPageView, BooksListPageView, BookDetailView, AuthorDetailView
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
     path('about/', AboutPageView.as_view(), name='about'),
     path('books/', BooksListPageView.as_view(), name='books_list'),
-    path('book/<int:pk>', BookDetailView.as_view(), name='book-detail-view')
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('book/<int:pk>', BookDetailView.as_view(), name='book-detail-view'),
+    path('author/<int:pk>', AuthorDetailView.as_view(), name='author-detail-view'),
+
+]

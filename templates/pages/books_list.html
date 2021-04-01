@@ -5,6 +5,13 @@
 
 {% block content %}
 
+    <div>
+        <p class="font-weight-bold h5" style="color:#333c3c">
+            <a href="http://127.0.0.1:8000/book-api/" target="_blank">API</a>
+            dzięki któremu możliwe są wszelkie operacje dotyczące książek na tej stronie
+        </p>
+    </div>
+
     <table class="table">
         <tr>
             <th scope="col">TYTUŁ</th>
@@ -14,8 +21,8 @@
         {% for book in books_list %}
             <tr>
                 <td><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></td>
-{#                <td><a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></td>#}
-                <td> {{ book.author.name }}</td>
+                <td><a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></td>
+{#                <td> {{ book.author.name }}</td>#}
                 <td>{{ book.book_type }}</td>
             </tr>
         {% endfor %}
@@ -32,7 +39,6 @@
                 {% else %}
                     <li class="page-item"><span class="page-link">&laquo;</span></li>
                 {% endif %}
-{#                {% for i in page_obj.paginator.page_range %}#}
                     <li class="page-item">
                         <span class="page-link">
                             <a>
@@ -40,7 +46,6 @@
                             </a>
                         </span>
                     </li>
-{#                {% endfor %}#}
                 {% if page_obj.has_next %}
                     <li class="page-item">
                         <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
@@ -50,5 +55,4 @@
                 {% endif %}
             </ul>
         {% endif %}
-
 {% endblock content %}

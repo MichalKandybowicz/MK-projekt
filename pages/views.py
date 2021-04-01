@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.views import generic
 from django.views.generic import TemplateView, ListView
 
-from backend.models import CustomUser, Book
+from backend.models import CustomUser, Book, Author
 
 
 # from .forms import
@@ -24,11 +24,17 @@ class BookDetailView(generic.DetailView):
     template_name = 'pages/book_detail.html'
 
 
+class AuthorDetailView(generic.DetailView):
+    model = Author
+    context_object_name = 'author'
+    template_name = 'pages/author_detail.html'
+
+
 class BooksListPageView(ListView):
     model = Book
     context_object_name = 'books_list'
     template_name = 'pages/books_list.html'
-    paginate_by = 20
+    paginate_by = 3
 
     def get_queryset(self):
         return Book.objects.all().order_by('id')
