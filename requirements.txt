@@ -16,6 +16,7 @@ djangorestframework==3.12.2
 gunicorn==20.0.4
 idna==2.10
 oauthlib==3.1.0
+Pillow==8.1.2
 psycopg2-binary==2.8.6
 pycparser==2.20
 PyJWT==1.7.1
@@ -29,3 +30,5 @@ six==1.15.0
 sqlparse==0.4.1
 urllib3==1.26.2
 whitenoise==5.2.0
+Pillow==8.1.2
+
