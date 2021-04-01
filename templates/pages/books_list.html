@@ -7,7 +7,7 @@
 
     <div>
         <p class="font-weight-bold h5" style="color:#333c3c">
-            <a href="http://127.0.0.1:8000/book-api/" target="_blank">API</a>
+            <a href="https://project4cv.herokuapp.com/book-api/" target="_blank">API</a>
             dzięki któremu możliwe są wszelkie operacje dotyczące książek na tej stronie
         </p>
     </div>
@@ -22,7 +22,6 @@
             <tr>
                 <td><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></td>
                 <td><a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></td>
-{#                <td> {{ book.author.name }}</td>#}
                 <td>{{ book.book_type }}</td>
             </tr>
         {% endfor %}
