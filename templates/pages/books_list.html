@@ -1,0 +1,54 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Książki{% endblock %}
+
+{% block content %}
+
+    <table class="table">
+        <tr>
+            <th scope="col">TYTUŁ</th>
+            <th scope="col">AUTOR</th>
+            <th scope="col">GATUNEK</th>
+        </tr>
+        {% for book in books_list %}
+            <tr>
+                <td><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></td>
+{#                <td><a href="{{ book.author.get_absolute_url }}">{{ book.author }}</a></td>#}
+                <td> {{ book.author.name }}</td>
+                <td>{{ book.book_type }}</td>
+            </tr>
+        {% endfor %}
+
+
+        <ul class="pagination">
+        {% if page_obj.has_other_pages %}
+            </ul>
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                    </li>
+                {% else %}
+                    <li class="page-item"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+{#                {% for i in page_obj.paginator.page_range %}#}
+                    <li class="page-item">
+                        <span class="page-link">
+                            <a>
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </a>
+                        </span>
+                    </li>
+{#                {% endfor %}#}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                    </li>
+                {% else %}
+                    <li class="disabled"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+            </ul>
+        {% endif %}
+
+{% endblock content %}

@@ -1,0 +1,77 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    container_name: abcd-pg #you can change this
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgress
+      - POSTGRES_DB=abcd
+    ports:
+      - '5432:5432'
+
+  redis:
+    build: redis_conf/.
+    image: redis
+    container_name: abcd-redis
+    ports:
+      - '6379:6379'
+    environment:
+      - REDIS_PASSWORD=mama123
+    volumes:
+      - ./data:/bitnami/redis/data
+
+#  web:
+#    build: .
+##    command: gunicorn --bind 0.0.0.0:8000 config.wsgi
+#    command: python manage.py runserver 0.0.0.0:8000
+#    volumes:
+#      - .:/code
+#    environment:
+#      - DB_NAME=postgres
+#      - DB_USER=postgres
+#      - DB_PASSWORD=postgress
+#      - DB_HOST=db
+#      - DB_PORT=5432
+#      - DEBUG=1
+#      - REDIS_HOST=redis
+#      - REDIS_PASSWORD=mama123
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      - db
+#      - redis
+
+  unicorn:
+    build: .
+    command: gunicorn --bind 0.0.0.0:8001 config.wsgi
+    #command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    environment:
+      - DB_NAME=abcd
+      - DB_USER=postgres
+      - DB_PASSWORD=postgress
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DEBUG=1
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=mama123
+    ports:
+      - "8001:8001"
+    depends_on:
+      - db
+      - redis
+
+
+#  pgadmin:
+#    image: dpage/pgadmin4
+#    container_name: abcd-pgadmin #you can change this
+#    depends_on:
+#      - db
+#    ports:
+#      - '5052:80'
+#    environment:
+#      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+#      PGADMIN_DEFAULT_PASSWORD: mama123
+#    restart: always

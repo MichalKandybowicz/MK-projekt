@@ -1,0 +1,37 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Główna{% endblock title %}
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-left">
+    <div class="container">
+        <div>
+            <h2 class="text-center" style="color:darkslategrey" >Witaj,</h2>
+            <br>
+        </div>
+        <div class="row">
+            <div class="col d-flex justify-content-center">
+                <img style="max-width: 200px" src={% static 'images/MichalKandybowicz.jpeg' %} alt="">
+            </div>
+            <div class="col">
+                <br>
+                <p class="font-weight-bold" style="color:darkslategrey">
+                    mam na imie się Michał, zapraszam do zapoznania się z moim projektem twożonym przy użyciu Django 3,
+                    DRF oraz bootstrapa. Projekt jak i baza danych hostowane są na darmowej wersji
+                    <a href="https://www.heroku.com">heroku</a>.</p>
+            </div>
+        </div>
+        <div>
+            <br>
+            <p class="font-weight-bold" style="color:darkslategrey">
+                Jest to projekt który służy mi do nauki oraz utrwalania wiedzy, posttram się
+                również zawrzeć ciekawą treśc aby nie zanudzić przeglądających osób, możlwe
+                że będę zamieszczać tu linki do artykułów które mnie zainteresują lub po prostu jakieś ciekwostki.
+            </p>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

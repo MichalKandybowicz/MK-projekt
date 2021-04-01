@@ -1,0 +1,31 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %} {{ book.title }} {% endblock %}
+
+{% block content %}
+    <br>
+    <br>
+    <div class="row">
+        <div class="col  justify-content-center">
+            <div>
+                <p class="font-weight-bold h2" style="color:darkslategrey">{{ book.title }}</p>
+            </div>
+            <br>
+            <div>
+                <p class="font-weight-bold" style="color:darkslategrey">Autor: {{ book.author }}</p>
+            </div>
+            <br>
+            <div>
+                <p class="font-weight-bold" style="color:darkslategrey">{{ book.note }}</p>
+            </div>
+
+
+        </div>
+        <div class="col">
+            <img src={{ book.photo.url }}  alt=""/>
+        </div>
+    </div>
+
+
+{% endblock content %}
