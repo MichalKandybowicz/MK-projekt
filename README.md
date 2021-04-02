@@ -1,8 +1,5 @@
  🚀 Features
 
-
-----
-
 ## Table of Contents
 * **[Installation](#installation)**
   * [Pip](#pip)
