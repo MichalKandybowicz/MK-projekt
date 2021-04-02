@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href={% static 'css/farmer.css' %}>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+    <div id="position: relative">
+        <div id="cloud_1" class="cloud-inf" style="display: none;">6 królików = 1 mis</div>
+        <div id="cloud_2" class="cloud-inf" style="display: none;">2 misie = 1 słoń</div>
+        <div id="cloud_3" class="cloud-inf" style="display: none;">3 słonie = 1 giraffe</div>
+        <div id="cloud_4" class="cloud-inf" style="display: none;">2 giraffe = 1 corgie</div>
+    </div>
+
+    <table class="table table-dark">
+        <tbody>
+        <tr>
+            <th class="menu">
+                Menu
+            </th>
+{#            <th class="trade">#}
+{#                <button type="button" class="btn btn-primary" id="rabbit-to-bear"#}
+{#                        onmouseover="document.getElementById('cloud_1').style.display = ''"#}
+{#                        onmouseout="document.getElementById('cloud_1').style.display = 'none'"#}
+{#                >Wymiana</button>#}
+{#            </th>#}
+{##}
+{#            <th class="trade">#}
+{#                <button type="button" class="btn btn-primary" id="bear-to-elephant"#}
+{#                        onmouseover="document.getElementById('cloud_2').style.display = ''"#}
+{#                        onmouseout="document.getElementById('cloud_2').style.display = 'none'"#}
+{#                >Wymiana</button>#}
+{#            </th>#}
+{##}
+{#            <th class="trade">#}
+{#                <button type="button" class="btn btn-primary" id="elephants-to-giraffe"#}
+{#                        onmouseover="document.getElementById('cloud_3').style.display = ''"#}
+{#                        onmouseout="document.getElementById('cloud_3').style.display = 'none'"#}
+{#                >Wymiana</button>#}
+{#            </th>#}
+{##}
+{#            <th class="trade">#}
+{#                <button type="button" class="btn btn-primary" id="giraffe-to-Dog"#}
+{#                        onmouseover="document.getElementById('cloud_4').style.display = ''"#}
+{#                        onmouseout="document.getElementById('cloud_4').style.display = 'none'"#}
+{#                >Wymiana</button>#}
+{#            </th>#}
+        </tr>
+        <tr>
+            <th scope="col" id="menu" class="menu">
+
+                <div class="dices">
+                    <img class="dice" id="dice1" alt="some image" style="max-width: 100px; max-height:100px" src={% static 'farm_img/bear.png' %}>
+                    <img class="dice" id="dice2" alt="some image" style="max-width: 100px; max-height:100px" src={% static 'farm_img/bear.png' %}>
+                </div>
+                <div class="roll-dice-div">
+                    <button type="button" class="btn btn-primary" id="roll-dice">Rzut kostką!</button>
+                </div>
+
+            </th>
+            <th scope="col" id="rabbit" class="farm"></th>
+            <th scope="col" id="bear" class="farm"></th>
+            <th scope="col" id="elephants" class="farm"></th>
+            <th scope="col" id="giraffe" class="farm"></th>
+        </tr>
+        </tbody>
+    </table>
+
+    <script src="{% static 'js/farmer.js' %}"></script>
+</body>
+
+</html>
