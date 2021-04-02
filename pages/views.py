@@ -1,5 +1,7 @@
+import csv
+
 from django.db.models.query_utils import Q
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect
 from django.views import generic
 from django.views.generic import TemplateView, ListView
@@ -46,3 +48,29 @@ class BooksListPageView(ListView):
     def get_context_data(self, **kwargs):
         context = super(BooksListPageView, self).get_context_data(**kwargs)
         return context
+
+
+def books_to_csv(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="books.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(
+        [
+            "id ", "title ", "author ", "date_of_publication ", "book type "
+         ]
+    )
+    books_list = Book.objects.all().order_by("id")
+    for book in books_list:
+        writer.writerow(
+            [
+                book.id,
+                book.title,
+                book.author,
+                book.date_of_publication,
+                book.book_type,
+
+             ]
+        )
+    return response

@@ -1,0 +1,52 @@
+img{
+    width: 40px;
+    height: 40px;
+}
+
+.farm {
+    border: 1px solid saddlebrown;
+    width: 220px;
+    height: 500px;
+}
+
+.dices{
+    flex: auto;
+}
+
+.menu {
+    width: 100px;
+}
+
+.trade{
+    display-inside: ruby;
+    justify-content: center;
+    align-items: center;
+}
+
+.animal:hover {
+    background: aqua;
+}
+
+.animal:active {
+    background: rebeccapurple;
+}
+
+#animal:checked + label {
+    background: black;
+}
+
+.roll-dice-div{
+    padding-top: 10px;
+}
+
+.cloud-inf {
+    font-size: 30px;
+    background: saddlebrown;
+    position: absolute;
+    left: 40%;
+    top: 150px;
+    border: medium solid blue;
+    padding: 20px;
+
+}
+

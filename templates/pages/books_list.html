@@ -28,6 +28,9 @@
 
 
         <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="{% url 'books_to_csv' %}">Pobierz liste CSV</a>
+            </li>
         {% if page_obj.has_other_pages %}
             </ul>
             <ul class="pagination">
