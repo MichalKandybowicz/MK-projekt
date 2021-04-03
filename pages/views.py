@@ -95,10 +95,8 @@ class MovieListWithForm(ListView, ModelFormMixin):
 
         if self.form.is_valid():
             self.object = self.form.save()
-            # Here ou may consider creating a new instance of form_class(),
-            # so that the form will come clean.
+            self.form = MovieForm()
 
-        # Whether the form validates or not, the view will be rendered by get()
         return self.get(request, *args, **kwargs)
 
     def get_context_data(self, *args, **kwargs):
