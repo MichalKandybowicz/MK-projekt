@@ -5,11 +5,13 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect
 from django.views import generic
 from django.views.generic import TemplateView, ListView
+from django.views.generic.edit import ModelFormMixin
 
-from backend.models import CustomUser, Book, Author
+from backend.models import CustomUser, Book, Author, Movie
 
 
 # from .forms import
+from pages.forms import MovieForm
 
 
 class HomePageView(TemplateView):
@@ -74,3 +76,34 @@ def books_to_csv(request):
              ]
         )
     return response
+
+
+class MovieListWithForm(ListView, ModelFormMixin):
+    model = Movie
+    form_class = MovieForm
+    template_name = 'pages/movie_list.html'
+
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        self.form = self.get_form(self.form_class)
+        return ListView.get(self, request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        # When the form is submitted, it will enter here
+        self.object = None
+        self.form = self.get_form(self.form_class)
+
+        if self.form.is_valid():
+            self.object = self.form.save()
+            # Here ou may consider creating a new instance of form_class(),
+            # so that the form will come clean.
+
+        # Whether the form validates or not, the view will be rendered by get()
+        return self.get(request, *args, **kwargs)
+
+    def get_context_data(self, *args, **kwargs):
+        # Just include the form
+        context = super(MovieListWithForm, self).get_context_data(*args, **kwargs)
+        context['form'] = self.form
+        context['list'] = Movie.objects.all().order_by('votes')
+        return context

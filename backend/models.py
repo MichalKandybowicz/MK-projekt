@@ -46,7 +46,16 @@ class Book(models.Model):
         return reverse('book-detail-view', args=[str(self.id)])
 
 
+class Movie(models.Model):
+    title = models.CharField(max_length=50, blank=True, null=True)
+    votes = models.IntegerField(default=0)
+    date_of_publication = models.DateField(null=True, blank=True)
 
+    def __str__(self):
+        return str(self.title)
+
+    def get_absolute_url(self):
+        return reverse('movie-detail-view', args=[str(self.id)])
 
 
 

@@ -1,0 +1,43 @@
+{% extends '_base.html' %}
+{% load crispy_forms_filters %}
+{% load rest_framework %}
+{% load static %}
+
+{% block title %}Filmy{% endblock %}
+
+{% block content %}
+
+    <div>
+        <p class="font-weight-bold h5" style="color:#333c3c">
+            Podziel się z innymi filmami które warto zoobaczyć, głosowanie na filmy pojawi się w bajbliższym czasie :)
+        </p>
+    </div>
+
+
+    <form method="post">
+       {% csrf_token %}
+       {{ form|crispy }}
+       <button class="btn btn-success" type="submit">
+           Log in
+       </button>
+    </form>
+    <br>
+    <br>
+
+
+    <table class="table">
+        <tr>
+            <th scope="col">TYTUŁ</th>
+            <th scope="col">DATA PUBLIKACJI</th>
+            <th scope="col">GŁOSY</th>
+        </tr>
+        {% for movie in list %}
+            <tr>
+                <td>{{ movie.title }}</td>
+                <td>{{ movie.date_of_publication }}</td>
+                <td>{{ movie.votes }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock content %}
