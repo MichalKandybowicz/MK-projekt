@@ -1,23 +1,11 @@
-from accounts.models import CustomUser
 from rest_framework import serializers
-from django.db.models.query_utils import Q
 
-from backend.models import Author, BookType, Book
+from backend.models import Attack
 
 
-class AuthorSerializer(serializers.ModelSerializer):
+class AttackSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Author
-        fields = ['url', 'name', 'date_of_birth', 'date_of_death', 'photo', 'note']
-
-
-class BookTypeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BookType
-        fields = ['url', 'title']
-
-
-class BookSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Book
-        fields = ['url', 'author', 'book_type', 'title', 'photo', 'note', 'date_of_publication']
+        model = Attack
+        fields = ['url', 'defender_x', 'defender_y', 'attacker_x', 'attacker_y', 'attack_type',
+                  'entry_time', 'send_time', 'defender_name', 'attacker_name'
+                  ]
