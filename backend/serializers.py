@@ -6,9 +6,8 @@ from backend.models import Attack, VillageDetailInformation
 class AttackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attack
-        fields = ['url', 'defender_x', 'defender_y', 'attacker_x', 'attacker_y', 'attack_type',
-                  'entry_time', 'send_time', 'defender_name', 'attacker_name'
-                  ]
+        fields = ['url', 'defender_cords', 'attacker_cords', 'distance',
+                  'attack_type', 'entry_time', 'defender_name', 'attacker_name']
 
 
 class VillageDetailInformationSerializer(serializers.ModelSerializer):
