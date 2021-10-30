@@ -8,6 +8,7 @@ from backend import views as b_views
 
 api = routers.DefaultRouter()
 api.register(r'attacks', b_views.AttackViewSet)
+api.register(r'villages', b_views.VillageViewSet)
 
 urlpatterns = [
                   path('accounts/', include('allauth.urls')),

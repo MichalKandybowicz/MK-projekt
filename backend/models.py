@@ -23,3 +23,12 @@ class Attack(models.Model):
 
     def get_absolute_url(self):
         return reverse('movie-detail-view', args=[str(self.id)])
+
+
+class VillageDetailInformation(models.Model):
+    x = models.IntegerField(default=0)
+    y = models.IntegerField(default=0)
+    troops_type = models.CharField(max_length=3, null=True, blank=True)  # off/def/
+    lose_off = models.DateTimeField(null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
