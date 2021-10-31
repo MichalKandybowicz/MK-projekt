@@ -16,7 +16,6 @@ DEBUG = os.environ.get('DEBUG', False)  # False
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "https://eco4coin.herokuapp.com/"]
 
 CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = ['*']
 
 # APPS
 # ------------------------------------------------------------------------------
@@ -34,6 +33,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     # Third-party
+    'corsheaders',
     'allauth',
     'allauth.account',
     'crispy_forms',
