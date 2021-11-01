@@ -1,34 +1,81 @@
+from datetime import datetime
+
+from django import forms
+from django.core.exceptions import ValidationError
+from django.shortcuts import render
 from django.views.generic import TemplateView
+
+from backend.models import Report, Village
+from backend.serializers import get_information_from_reports
+
+
+class ReportsForm(forms.Form):
+    raporty = forms.CharField(
+        widget=forms.Textarea(
+            attrs={"rows": 20, "cols": 70},
+        ),
+    )
+
+    def clean(self):
+        cd = self.cleaned_data
+        reports = cd.get("raporty")
+        reports = reports.replace('Przesłane raporty:\r\n', '')
+        reports = reports.replace('[/report]\r\n', '')
+        reports = reports.replace('[/report]', '')
+        reports = reports.replace('- [report]', ' ')
+        reports = reports.split(' ')
+        reports = reports[1:]
+        for i in reports:
+            if len(i) == 32:
+                pass
+            else:
+                raise ValidationError("Nieprawidłowo wklejone")
+
+        return reports
+
+
+def home(request):
+    if request.method == "POST":
+        form = ReportsForm(request.POST)
+        if form.is_valid():
+            reports = form.data["raporty"]
+            reports = reports.replace('Przesłane raporty:\r\n', '')
+            reports = reports.replace('[/report]\r\n', '')
+            reports = reports.replace('[/report]', '')
+            reports = reports.replace('- [report]', ' ')
+            reports = reports.split(' ')
+            reports = reports[1:]
+            for i in reports:
+
+                data = get_information_from_reports(i)
+                if Village.objects.filter(cords=data['attacker_cords']).exists():
+                    village = Village.objects.get(cords=data['attacker_cords'])
+                else:
+                    village = v = Village.objects.create(cords=data['attacker_cords'])
+                    v.save()
+
+                report = Report.objects.create(
+                    attacker_cords=village,
+                    battle_time=datetime.strptime(data['battle_time'], '%d.%m.%y %H:%M:%S'),
+                    send_troops_off=data['send_troops_off'],
+                    loos_troops_off=data['loos_troops_off'],
+                    send_troops_def=data['send_troops_def'],
+                    loos_troops_def=data['loos_troops_def'],
+                    send_catapult=data['send_catapult'],
+                    loos_catapult=data['loos_catapult'],
+                    attack_hash=i
+                )
+                report.save()
+
+            form = ReportsForm()
+            return render(request, 'pages/home_test.html', {'form': form})
+    else:
+        form = ReportsForm()
+    return render(request, 'pages/home_test.html', {'form': form})
 
 
 class HomePageView(TemplateView):
     template_name = 'pages/home.html'
 
-
-class AboutPageView(TemplateView):
-    template_name = 'pages/about.html'
-
-# def books_to_csv(request):  todo zamienić na import ataków do csv?
-#     # Create the HttpResponse object with the appropriate CSV header.
-#     response = HttpResponse(content_type='text/csv')
-#     response['Content-Disposition'] = 'attachment; filename="books.csv"'
-#
-#     writer = csv.writer(response)
-#     writer.writerow(
-#         [
-#             "id ", "title ", "author ", "date_of_publication ", "book type "
-#          ]
-#     )
-#     books_list = Book.objects.all().order_by("id")
-#     for book in books_list:
-#         writer.writerow(
-#             [
-#                 book.id,
-#                 book.title,
-#                 book.author,
-#                 book.date_of_publication,
-#                 book.book_type,
-#
-#              ]
-#         )
-#     return response
+# class AboutPageView(TemplateView):
+#     template_name = 'pages/about.html'

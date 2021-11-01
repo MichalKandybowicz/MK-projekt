@@ -7,10 +7,17 @@
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-left">
         <div class="container">
             <div>
-
                 <p class="font-weight-bold" style="color:darkslategrey">
                     Obecnie obsługiwany świat 169
                 </p>
+
+
+                <h2>Wgraj raporty</h2>
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {{ form }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
 
 
             </div>
