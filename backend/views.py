@@ -1,12 +1,24 @@
+from rest_framework import mixins
 from rest_framework import permissions
-from rest_framework import viewsets
+from rest_framework.viewsets import GenericViewSet
 
 from backend.models import Attack, Report, Village
 from backend.serializers import AttackCreateSerializer, AttackSerializer, VillageSerializer, ReportSerializer, \
     ReportCreteSerializer, VillageCreateSerializer
 
 
-class AttackViewSet(viewsets.ModelViewSet):
+class CustomModelViewSet(
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    # mixins.UpdateModelMixin,
+    # mixins.DestroyModelMixin,
+    mixins.ListModelMixin,
+    GenericViewSet
+):
+    pass
+
+
+class AttackViewSet(CustomModelViewSet):
     """
     """
     queryset = Attack.objects.all()
@@ -20,7 +32,7 @@ class AttackViewSet(viewsets.ModelViewSet):
         return AttackSerializer
 
 
-class VillageViewSet(viewsets.ModelViewSet):
+class VillageViewSet(CustomModelViewSet):
     """
     """
     queryset = Village.objects.all()
@@ -34,7 +46,7 @@ class VillageViewSet(viewsets.ModelViewSet):
         return VillageSerializer
 
 
-class ReportViewSet(viewsets.ModelViewSet):
+class ReportViewSet(CustomModelViewSet):
     """
     """
     queryset = Report.objects.all()
