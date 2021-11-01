@@ -19,6 +19,7 @@ class Attack(models.Model):
     defender_cords = models.CharField(max_length=7)
     attacker_cords = models.ForeignKey(
         Village,
+        related_name='villages_attacks',
         on_delete=models.PROTECT,
         null=True,
         blank=True)
@@ -37,7 +38,8 @@ class Attack(models.Model):
 
 
 class Report(models.Model):
-    attacker_cords = models.ForeignKey(Village, on_delete=models.SET_NULL, null=True, blank=True)
+    attacker_cords = models.ForeignKey(Village, related_name='villages_reports', on_delete=models.SET_NULL, null=True,
+                                       blank=True)
     battle_time = models.DateTimeField(null=True, blank=True)
     send_troops_off = models.IntegerField(null=True, blank=True)
     loos_troops_off = models.IntegerField(null=True, blank=True)

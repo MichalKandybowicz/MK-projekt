@@ -52,13 +52,6 @@ class AttackCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"duplicate": "This attack is already in the database"})
         return data
 
-
-class VillageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Village
-        fields = '__all__'
-
-
 class ReportCreteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Report
@@ -106,6 +99,35 @@ class ReportSerializer(serializers.ModelSerializer):
         model = Report
         fields = ['url', 'attacker_cords', 'battle_time', 'send_troops_off', 'loos_troops_off', 'send_troops_def',
                   'loos_troops_def', 'send_catapult', 'loos_catapult', 'attack_hash']
+
+
+class AttackSpecSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Attack
+        fields = ['url', 'defender_cords', 'distance', 'attack_type', 'entry_time', 'defender_name',
+                  'attacker_name']
+
+
+class ReportSpecSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Report
+        fields = ['url', 'battle_time', 'send_troops_off', 'loos_troops_off', 'send_troops_def',
+                  'loos_troops_def', 'send_catapult', 'loos_catapult', 'attack_hash']
+
+
+class VillageSerializer(serializers.ModelSerializer):
+    villages_attacks = AttackSpecSerializer(many=True, read_only=True)
+    villages_reports = ReportSpecSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Village
+        fields = ['cords', 'villages_attacks', 'villages_reports']
+
+
+class VillageCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Village
+        fields = ['cords']
 
 
 def scrap_report(report_hash, s='pl169'):

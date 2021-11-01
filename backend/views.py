@@ -3,7 +3,7 @@ from rest_framework import viewsets
 
 from backend.models import Attack, Report, Village
 from backend.serializers import AttackCreateSerializer, AttackSerializer, VillageSerializer, ReportSerializer, \
-    ReportCreteSerializer
+    ReportCreteSerializer, VillageCreateSerializer
 
 
 class AttackViewSet(viewsets.ModelViewSet):
@@ -26,6 +26,12 @@ class VillageViewSet(viewsets.ModelViewSet):
     queryset = Village.objects.all()
     serializer_class = VillageSerializer
     permission_classes = [permissions.AllowAny]
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return VillageCreateSerializer
+
+        return VillageSerializer
 
 
 class ReportViewSet(viewsets.ModelViewSet):
