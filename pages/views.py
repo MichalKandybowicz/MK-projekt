@@ -26,13 +26,15 @@ class ReportsForm(forms.Form):
         reports = reports.replace('- [report]', ' ')
         reports = reports.split(' ')
         reports = reports[1:]
-        for i in reports:
-            if len(i) == 32:
-                pass
-            else:
-                raise ValidationError("Nieprawidłowo wklejone")
 
-        return reports
+        if reports is list:
+            for i in reports:
+                if len(i) == 32:
+                    pass
+                else:
+                    raise ValidationError("Coś poszło nie tak, zobacz czy poprawnie wkleiłeś")
+            return reports
+        raise ValidationError("Powinien zawierać conajmniej 1 raport")
 
 
 def home(request):
