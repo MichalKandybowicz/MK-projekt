@@ -9,12 +9,21 @@ from django.views.generic import TemplateView
 from backend.models import Report, Village
 from backend.serializers import get_information_from_reports
 
-
+a = """Przesłane raporty:
+- [report]c4e68a2af60ad135f9686343563f23f2[/report]
+- [report]0d1ea77d917f7d8212e3e42399a00a2b[/report]
+- [report]719cf6d4328c894de31625aba55bb5c2[/report]
+"""
 class ReportsForm(forms.Form):
     raporty = forms.CharField(
         widget=forms.Textarea(
-            attrs={"rows": 20, "cols": 70},
+            attrs={"rows": 20,
+                   "cols": 70,
+                   'placeholder': a,
+                   },
+
         ),
+
     )
 
     def clean(self):
