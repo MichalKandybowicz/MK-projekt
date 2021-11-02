@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django import forms
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 from django.shortcuts import render
 from django.views.generic import TemplateView
 
@@ -48,24 +49,31 @@ def home(request):
             for i in reports:
 
                 data = get_information_from_reports(i)
-                if Village.objects.filter(cords=data['attacker_cords']).exists():
-                    village = Village.objects.get(cords=data['attacker_cords'])
-                else:
-                    village = v = Village.objects.create(cords=data['attacker_cords'])
-                    v.save()
+                if data is not None:
 
-                report = Report.objects.create(
-                    attacker_cords=village,
-                    battle_time=datetime.strptime(data['battle_time'], '%d.%m.%y %H:%M:%S'),
-                    send_troops_off=data['send_troops_off'],
-                    loos_troops_off=data['loos_troops_off'],
-                    send_troops_def=data['send_troops_def'],
-                    loos_troops_def=data['loos_troops_def'],
-                    send_catapult=data['send_catapult'],
-                    loos_catapult=data['loos_catapult'],
-                    attack_hash=i
-                )
-                report.save()
+                    if Village.objects.filter(cords=data['attacker_cords']).exists():
+                        village = Village.objects.get(cords=data['attacker_cords'])
+                    else:
+                        village = v = Village.objects.create(cords=data['attacker_cords'])
+                        v.save()
+                    if not Report.objects.filter(
+                            Q(attacker_cords=village) &
+                            Q(battle_time=datetime.strptime(data['battle_time'], '%d.%m.%y %H:%M:%S')) &
+                            Q(send_troops_off=data['send_troops_off']) &
+                            Q(loos_troops_off=data['loos_troops_off'])
+                    ).exists():
+                        report = Report.objects.create(
+                            attacker_cords=village,
+                            battle_time=datetime.strptime(data['battle_time'], '%d.%m.%y %H:%M:%S'),
+                            send_troops_off=data['send_troops_off'],
+                            loos_troops_off=data['loos_troops_off'],
+                            send_troops_def=data['send_troops_def'],
+                            loos_troops_def=data['loos_troops_def'],
+                            send_catapult=data['send_catapult'],
+                            loos_catapult=data['loos_catapult'],
+                            attack_hash=i
+                        )
+                        report.save()
 
             form = ReportsForm()
             return render(request, 'pages/home_test.html', {'form': form})

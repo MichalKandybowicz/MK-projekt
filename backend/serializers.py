@@ -4,6 +4,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from django.db.models import Q
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from backend.models import Attack, Village, Report
 
@@ -76,21 +77,26 @@ class ReportCreteSerializer(serializers.ModelSerializer):
             v.save()
 
         # date_time_obj = datetime.datetime.strptime(data['battle_time'], '%d/%m/%y %H:%M:%S')
-
-        report = Report.objects.create(
-            attacker_cords=village,
-            battle_time=datetime.datetime.strptime(data['battle_time'], '%d.%m.%y %H:%M:%S'),
-            send_troops_off=data['send_troops_off'],
-            loos_troops_off=data['loos_troops_off'],
-            send_troops_def=data['send_troops_def'],
-            loos_troops_def=data['loos_troops_def'],
-            send_catapult=data['send_catapult'],
-            loos_catapult=data['loos_catapult'],
-            attack_hash=validated_data['attack_hash']
-        )
-        report.save()
-        return report
-
+        if not Report.objects.filter(
+                Q(attacker_cords=village) &
+                Q(battle_time=datetime.datetime.strptime(data['battle_time'], '%d.%m.%y %H:%M:%S')) &
+                Q(send_troops_off=data['send_troops_off']) &
+                Q(loos_troops_off=data['loos_troops_off'])
+        ).exists():
+            report = Report.objects.create(
+                attacker_cords=village,
+                battle_time=datetime.datetime.strptime(data['battle_time'], '%d.%m.%y %H:%M:%S'),
+                send_troops_off=data['send_troops_off'],
+                loos_troops_off=data['loos_troops_off'],
+                send_troops_def=data['send_troops_def'],
+                loos_troops_def=data['loos_troops_def'],
+                send_catapult=data['send_catapult'],
+                loos_catapult=data['loos_catapult'],
+                attack_hash=validated_data['attack_hash']
+            )
+            report.save()
+            return report
+        raise ValidationError("taki raport jest juz w bazie")
 
 class ReportSerializer(serializers.ModelSerializer):
     attacker_cords = serializers.StringRelatedField(many=False, read_only=True)
@@ -147,7 +153,6 @@ def scrap_report(report_hash, s='pl169'):
 
     x = soup.body.find('h4')
     data = [str(x)[4:-5], data[1], data[4], data[5], data[8], data[11], data[12]]
-    print(data)
     return data
 
 
