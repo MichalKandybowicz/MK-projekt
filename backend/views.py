@@ -1,5 +1,10 @@
+from datetime import datetime
+
+from django.db.models import Q
 from rest_framework import mixins
 from rest_framework import permissions
+from rest_framework.decorators import action
+from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from backend.models import Attack, Report, Village
@@ -31,6 +36,23 @@ class AttackViewSet(CustomModelViewSet):
 
         return AttackSerializer
 
+    def list(self, request):
+        today = datetime.today()
+        query_set = Attack.objects.filter(entry_time__gt=today)
+        serializer = AttackSerializer(query_set, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    @action(detail=True)
+    def from_village(self, request, pk):
+        today = datetime.today()
+
+        query_set = Attack.objects.filter(
+            Q(attacker_cords__cords=pk) &
+            Q(entry_time__gt=today)
+        )
+        serializer = AttackSerializer(query_set, many=True, context={'request': request})
+        return Response(serializer.data)
+
 
 class VillageViewSet(CustomModelViewSet):
     """
@@ -58,3 +80,9 @@ class ReportViewSet(CustomModelViewSet):
             return ReportCreteSerializer
 
         return ReportSerializer
+
+    @action(detail=True)
+    def from_village(self, request, pk):
+        query_set = Report.objects.filter(attacker_cords__cords=pk)
+        serializer = AttackSerializer(query_set, many=True, context={'request': request})
+        return Response(serializer.data)
