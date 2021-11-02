@@ -21,10 +21,8 @@ class ReportsForm(forms.Form):
         cd = self.cleaned_data
         reports = cd.get("raporty")
 
-        try:
-            reports.index("Przesłane raporty:")
-        except ValueError:
-            print("Not found")
+        if reports is None:
+            raise ValidationError("Co mnie pusty formularz wysyłąsz ciulu jeden!")
 
         reports = reports.replace('Przesłane raporty:\r\n', '')
         reports = reports.replace('[/report]\r\n', '')
