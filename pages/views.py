@@ -31,7 +31,7 @@ class ReportsForm(forms.Form):
         reports = reports.split(' ')
         reports_list = reports[1:]
 
-        if type(reports_list) is list or len(reports_list) == 0:
+        if (type(reports_list) is list) and (len(reports_list) > 0):
             for i in reports_list:
                 if len(i) == 32:
                     pass
