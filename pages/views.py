@@ -22,7 +22,7 @@ class ReportsForm(forms.Form):
         reports = cd.get("raporty")
 
         if reports is None:
-            raise ValidationError("Co mnie pusty formularz wysyłąsz ciulu jeden!")
+            raise ValidationError("Co mnie pusty formularz wysyłąsz ciulu jeden! Ctrl + V i jazda!")
 
         reports = reports.replace('Przesłane raporty:\r\n', '')
         reports = reports.replace('[/report]\r\n', '')
@@ -36,9 +36,9 @@ class ReportsForm(forms.Form):
                 if len(i) == 32:
                     pass
                 else:
-                    raise ValidationError("Coś poszło nie tak, zobacz czy poprawnie wkleiłeś")
+                    raise ValidationError("Mordeczko może tak sprawdzisz czy wkleiłeś elegancko?")
             return reports_list
-        raise ValidationError("Powinien zawierać conajmniej 1 raport")
+        raise ValidationError("Wariacie! Gdzie raporty, daj no przynajmniej 1 ładnie wklejony...")
 
 
 def home(request):
