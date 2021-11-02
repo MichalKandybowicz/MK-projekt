@@ -20,6 +20,12 @@ class ReportsForm(forms.Form):
     def clean(self):
         cd = self.cleaned_data
         reports = cd.get("raporty")
+
+        try:
+            reports.index("Przesłane raporty:")
+        except ValueError:
+            print("Not found")
+
         reports = reports.replace('Przesłane raporty:\r\n', '')
         reports = reports.replace('[/report]\r\n', '')
         reports = reports.replace('[/report]', '')
