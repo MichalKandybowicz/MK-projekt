@@ -170,9 +170,9 @@ def get_information_from_reports(report_hash: str, archers=True):
                 'loos_troops_off':
                     int(data[3][3]) + (int(data[3][6]) * 4) + (int(data[3][7]) * 5) + (int(data[3][9]) * 5),
                 'send_troops_def':
-                    int(data[2][1]) + int(data[2][2]) + int(data[2][4]) + (int(data[2][7]) * 6),
+                    int(data[2][1]) + int(data[2][2]) + int(data[2][4]) + (int(data[2][8]) * 6),
                 'loos_troops_def':
-                    int(data[3][1]) + int(data[3][2]) + int(data[3][4]) + (int(data[3][7]) * 6),
+                    int(data[3][1]) + int(data[3][2]) + int(data[3][4]) + (int(data[3][8]) * 6),
                 'send_catapult': int(data[2][10]),
                 'loos_catapult': int(data[2][10]),
             }
