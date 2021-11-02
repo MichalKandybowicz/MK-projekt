@@ -14,6 +14,8 @@ a = """Przesłane raporty:
 - [report]0d1ea77d917f7d8212e3e42399a00a2b[/report]
 - [report]719cf6d4328c894de31625aba55bb5c2[/report]
 """
+
+
 class ReportsForm(forms.Form):
     raporty = forms.CharField(
         widget=forms.Textarea(
@@ -21,9 +23,7 @@ class ReportsForm(forms.Form):
                    "cols": 70,
                    'placeholder': a,
                    },
-
         ),
-
     )
 
     def clean(self):

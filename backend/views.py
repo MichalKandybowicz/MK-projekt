@@ -84,5 +84,5 @@ class ReportViewSet(CustomModelViewSet):
     @action(detail=True)
     def from_village(self, request, pk):
         query_set = Report.objects.filter(attacker_cords__cords=pk)
-        serializer = AttackSerializer(query_set, many=True, context={'request': request})
+        serializer = ReportSerializer(query_set, many=True, context={'request': request})
         return Response(serializer.data)
