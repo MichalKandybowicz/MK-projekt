@@ -14,6 +14,10 @@ class HomePageView(TemplateView):
 class AboutPageView(TemplateView):
     template_name = 'pages/about.html'
 
+
+class AboutPageView(TemplateView):
+    template_name = 'pages/test.html'
+
 # class FarmPageView(TemplateView):
 #     template_name = 'farmer/farmer.html'
 #
