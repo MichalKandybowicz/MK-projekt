@@ -11,15 +11,7 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token(instance=None, created=False, **kwargs):
-    if created:
-        Token.objects.create(user=instance)
-
-
 class CustomUser(AbstractUser):
 
-    email = models.EmailField(blank=True, null=True)
-
     def __str__(self):
-        return str(self.email)
+        return str(self.username)

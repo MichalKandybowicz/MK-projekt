@@ -12,29 +12,5 @@ import uuid
 import random
 import string
 
-from backend.models import Author, BookType, Book
-from backend.serializers import AuthorSerializer, BookTypeSerializer, BookSerializer
-
-
-class AuthorViewSet(viewsets.ModelViewSet):
-    """
-    """
-    queryset = Author.objects.all()
-    serializer_class = AuthorSerializer
-    permission_classes = [permissions.AllowAny]
-
-
-class BookTypeViewSet(viewsets.ModelViewSet):
-    """
-    """
-    queryset = BookType.objects.all()
-    serializer_class = BookTypeSerializer
-    permission_classes = [permissions.AllowAny]
-
-
-class BookViewSet(viewsets.ModelViewSet):
-    """
-    """
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-    permission_classes = [permissions.AllowAny]
+# from backend.models import Author, BookType, Book
+# from backend.serializers import AuthorSerializer, BookTypeSerializer, BookSerializer
