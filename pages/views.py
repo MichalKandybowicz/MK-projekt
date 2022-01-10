@@ -1,10 +1,13 @@
 import csv
 
-from django.db.models.query_utils import Q
-from django.http import Http404, HttpResponse
+from django.contrib.auth import login, authenticate
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.views import generic
 from django.views.generic import TemplateView
+from django.contrib.auth.forms import AuthenticationForm
+
+from pages.forms import CustomUserCreationForm
 
 
 class HomePageView(TemplateView):
@@ -15,8 +18,41 @@ class AboutPageView(TemplateView):
     template_name = 'pages/about.html'
 
 
-class TestPageView(TemplateView):
-    template_name = 'pages/test.html'
+@login_required(login_url='login')
+def test_page_view(request):
+    return render(request=request, template_name="pages/test.html")
+
+
+def register_request(request):
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Registration successful.")
+            return redirect("home")
+
+        messages.error(request, "Unsuccessful registration. Invalid information.")
+    form = CustomUserCreationForm()
+    return render(request=request, template_name="account/signup.html", context={"register_form": form})
+
+
+def login_request(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"You are now logged in as {username}.")
+                return redirect("test")
+            else:
+                messages.error(request, "Invalid username or password.")
+        else:
+            messages.error(request, "Invalid username or password.")
+    form = AuthenticationForm()
+    return render(request=request, template_name="account/login.html", context={"login_form": form})
 
 # class FarmPageView(TemplateView):
 #     template_name = 'farmer/farmer.html'

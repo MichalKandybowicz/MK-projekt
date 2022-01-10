@@ -4,10 +4,16 @@
 {% block title %}Sign up{% endblock %}
 
 {% block content %}
-<h2>Sign up</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form|crispy }}
-  <button class="btn btn-success" type="submit">Sign up</button>
-</form>
+
+    <!--Register-->
+<div class="container py-5">
+	<h1>Rejestracja</h1>
+	<form method="POST">
+		{% csrf_token %}
+		{{ register_form|crispy }}
+		<button class="btn btn-primary" type="submit">Register</button>
+	</form>
+	<p class="text-center">Jeżeli już masz konto, <a href="/login">zaloguj się</a>.</p>
+</div>
+
 {% endblock content %}
