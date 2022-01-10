@@ -15,7 +15,7 @@ class AboutPageView(TemplateView):
     template_name = 'pages/about.html'
 
 
-class AboutPageView(TemplateView):
+class TestPageView(TemplateView):
     template_name = 'pages/test.html'
 
 # class FarmPageView(TemplateView):
