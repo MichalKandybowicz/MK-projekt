@@ -123,20 +123,9 @@ body {
         </div>
     </div>
     <div class="col-6">
-        <div>
-            <div class="card" style="margin-top: 1%; background-color: #b7b9bd">
-                    <div class="card-header">
-                        <h5 class="mb-0">Statystyki</h5>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text">
-						Wypraw dzisiaj: 8
-						<br>Karmiono dzisiaj: 8 razy
-						<br>Praca: tak
-						<br>Wyprawa: tak</p>
-                    </div>
-                </div>
-        </div>
+        {% block content %}
+            <p>Default content...</p>
+        {% endblock content %}
     </div>
     <div class="col-3">
         <div>

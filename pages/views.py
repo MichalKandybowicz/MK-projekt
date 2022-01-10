@@ -20,7 +20,7 @@ class AboutPageView(TemplateView):
 
 @login_required(login_url='login')
 def test_page_view(request):
-    return render(request=request, template_name="pages/test.html")
+    return render(request=request, template_name="game/game_main.html")
 
 
 def register_request(request):
