@@ -6,6 +6,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from django.conf import settings
+from django.db.models import SET_NULL
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
@@ -19,11 +20,8 @@ class CustomUser(AbstractUser):
         return str(self.username)
 
 
-class TypesInGame(models.IntegerChoices):
-    ZIEMIA = 1
-    OGIEŃ = 2
-    WODA = 3
-    WIATR = 4
+class TypesInGame(models.Model):
+    name = models.CharField(max_length=50)
 
 
 class MonsterSkill(models.Model):
@@ -45,7 +43,7 @@ class Monster(models.Model):
     level = models.IntegerField()
     exp = models.IntegerField()
     feeding = models.IntegerField()
-    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    owner = models.ForeignKey(CustomUser, on_delete=SET_NULL)
     in_team = models.BooleanField(default=False)
     in_market = models.BooleanField(default=False)
     in_travel = models.BooleanField(default=False)
