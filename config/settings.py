@@ -26,25 +26,23 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-
     'rest_framework',
-    'rest_framework.authtoken',
     # Third-party
     'allauth',
     'allauth.account',
-    'crispy_forms',
     'debug_toolbar',
     "django_rq",
+    'corsheaders',
     # Local
     'accounts',
-    'pages',
-    'backend'
+    'backend',
 ]
 
 # MIDDLEWARE
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#middleware
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,14 +63,13 @@ MIDDLEWARE = [
 ROOT_URLCONF = "config.urls"
 # https://docs.djangoproject.com/en/dev/ref/settings/#wsgi-application
 WSGI_APPLICATION = "config.wsgi.application"
-
 # TEMPLATES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#templates
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'react_build')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,7 +85,6 @@ TEMPLATES = [
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-
 
 DATABASES = {
     'default': {
@@ -181,7 +177,7 @@ INTERNAL_IPS = ['127.0.0.1']
 # CUSTOM USER MODEL CONFIGS
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/topics/auth/customizing/#substituting-a-custom-user-model
-AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'backend.CustomUser'
 
 # DJANGO-ALLAUTH CONFIGS
 # ------------------------------------------------------------------------------
@@ -197,6 +193,7 @@ AUTHENTICATION_BACKENDS = (
     "allauth.account.auth_backends.AuthenticationBackend",
 )
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
+
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
 ACCOUNT_USERNAME_REQUIRED = False
@@ -204,16 +201,23 @@ ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.TokenAuthentication'
+        # 'rest_framework.authentication.TokenAuthentication'
     ],
+    'DEFAULT_PERMISSION_CLASS': [
+        'rest_framework.permissions.IsAuthenticated'
+    ],
+
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_PAGINATION_CLASS': 'config.pagination.StandardResultsSetPagination',
     'PAGE_SIZE': 100,
-
 }
 
 # Activate Django-Heroku.
@@ -249,6 +253,9 @@ RQ_QUEUES = {
 }
 
 RQ_EXCEPTION_HANDLERS = ['path.to.my.handler'] # If you need custom exception handle
+
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 
 try:

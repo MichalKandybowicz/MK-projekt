@@ -1,7 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+
+from backend.models import CustomUser, ConfigLvl, Item, Monster,\
+    MonsterStatisticIncrease, Region, Ritual, Shop, Warehouse
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
 
 
 class CustomUserAdmin(UserAdmin):
@@ -25,3 +27,11 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(ConfigLvl)
+admin.site.register(Item)
+admin.site.register(Monster)
+admin.site.register(MonsterStatisticIncrease)
+admin.site.register(Region)
+admin.site.register(Ritual)
+admin.site.register(Shop)
+admin.site.register(Warehouse)
