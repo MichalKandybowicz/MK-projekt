@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 import django_on_heroku
 
 # SECRET_KEY = '43)%4yx)aa@a=+_c(fn&kf3g29xax+=+a&key9i=!98zyim=8j'
@@ -12,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = os.environ.get('DEBUG', False)  # False
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "https://eco4coin.herokuapp.com/"]
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "https://michal-kandybowicz-cv.herokuapp.com"]
 
 # APPS
 # ------------------------------------------------------------------------------
