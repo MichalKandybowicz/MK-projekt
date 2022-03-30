@@ -9,7 +9,6 @@ class Author(models.Model):
     name = models.CharField(max_length=50)
     date_of_birth = models.DateField()
     date_of_death = models.DateField(blank=True, null=True)
-    photo = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100)
     note = models.CharField(max_length=1000)
 
     def __str__(self):
@@ -33,7 +32,6 @@ class Book(models.Model):
     author = models.ForeignKey(Author, related_name="book_author", on_delete=models.PROTECT)
     book_type = models.ForeignKey(BookType, related_name="book_type", on_delete=models.PROTECT)
     title = models.CharField(max_length=50)
-    photo = models.ImageField(upload_to='books', height_field=None, width_field=None, max_length=100)
     note = models.CharField(max_length=1000)
     date_of_publication = models.DateField(null=True, blank=True)
 
