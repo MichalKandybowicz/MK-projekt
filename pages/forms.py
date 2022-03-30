@@ -1,9 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.forms import ModelForm, Form
-from django import forms
-from accounts.models import CustomUser
-from django.utils.translation import ugettext_lazy as _
+from django.forms import ModelForm
 
 from backend.models import Movie
 
@@ -15,13 +11,12 @@ class MovieForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MovieForm, self).__init__(*args, **kwargs)
-        self.fields['title'].label = "Tytuł"
+        self.fields['title'].label = "Dodaj film wisując jego tytuł"
 
-    def clean_title(self):
+    def clean__title(self):
         data = self.cleaned_data['title']
-        if Movie.objects.filter(title=data).exists():
-            raise ValidationError("Mamy juz w bazie taki film :)")
-        if data == None:
+        if data is None:
             raise ValidationError("Bez tytułu nie da rady :(")
-
+        elif Movie.objects.filter(title=data).exists():
+            raise ValidationError("Ten film istnieje już w naszej bazie :)")
         return data

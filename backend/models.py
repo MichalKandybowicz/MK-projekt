@@ -1,9 +1,7 @@
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
 
 from accounts.models import CustomUser
-from django.utils.translation import ugettext_lazy as _
 from accounts.models import CustomUser
 
 
@@ -35,7 +33,7 @@ class Book(models.Model):
     author = models.ForeignKey(Author, related_name="book_author", on_delete=models.PROTECT)
     book_type = models.ForeignKey(BookType, related_name="book_type", on_delete=models.PROTECT)
     title = models.CharField(max_length=50)
-    photo = models.ImageField(upload_to=None, height_field=None, width_field=None, max_length=100)
+    photo = models.ImageField(upload_to='books', height_field=None, width_field=None, max_length=100)
     note = models.CharField(max_length=1000)
     date_of_publication = models.DateField(null=True, blank=True)
 
@@ -47,9 +45,9 @@ class Book(models.Model):
 
 
 class Movie(models.Model):
-    title = models.CharField(max_length=50, blank=True, null=True)
+    title = models.CharField(max_length=50, blank=True, null=True, unique=True)
     votes = models.IntegerField(default=0)
-    date_of_publication = models.DateField(null=True, blank=True)
+    date_of_publication = models.DateField(auto_now_add=True, null=True, blank=True)
 
     def __str__(self):
         return str(self.title)

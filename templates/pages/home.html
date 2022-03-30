@@ -4,33 +4,35 @@
 {% block title %}Główna{% endblock title %}
 {% block content %}
 
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-left">
-    <div class="container">
-        <div>
-            <h2 class="text-center" style="color:darkslategrey" >Witaj</h2>
-            <br>
-        </div>
-        <div class="row">
-            <div class="col d-flex justify-content-center">
-                <img style="max-width: 200px; max-height: 300px" src={% static 'images/MichalKandybowicz.jpeg' %}>
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-left">
+        <div class="container">
+            <div>
+                <h2 class="text-center" style="color:darkslategrey">Witaj</h2>
+                <br>
             </div>
-            <div class="col">
+            <div class="row">
+                <div class="col d-flex justify-content-center">
+                    <img style="max-width: 200px; max-height: 300px" alt="img"
+                         src={% static 'images/MichalKandybowicz.jpeg' %}>
+                </div>
+                <div class="col">
+                    <br>
+                    <p class="font-weight-bold" style="color:darkslategrey">
+                        Mam na imię Michał, zapraszam do zapoznania się z moim projektem tworzonym przy użyciu Django 3,
+                        DRF oraz bootstrapa. Projekt, jak i baza danych, hostowane są na darmowej wersji
+                        <a href="https://www.heroku.com">heroku</a>.</p>
+                </div>
+            </div>
+            <div>
                 <br>
                 <p class="font-weight-bold" style="color:darkslategrey">
-                    Mam na imię Michał, zapraszam do zapoznania się z moim projektem tworzonym przy użyciu Django 3,
-                    DRF oraz bootstrapa. Projekt, jak i baza danych, hostowane są na darmowej wersji
-                    <a href="https://www.heroku.com">heroku</a>.</p>
+                    Jest to projekt, który służy mi do nauki oraz utrwalania wiedzy.
+                    Dodając kolejne elementy staram się wpasowywać je w całokształt strony,
+                    ale wykorzystywać różne rozwiązania.
+                </p>
+
             </div>
         </div>
-        <div>
-            <br>
-            <p class="font-weight-bold" style="color:darkslategrey">
-                Jest to projekt, który służy mi do nauki oraz utrwalania wiedzy, postaram się
-                również zawrzeć ciekawą treść, aby nie zanudzić przeglądających stronę osób :)
-            </p>
-
-        </div>
     </div>
-</div>
 
 {% endblock content %}

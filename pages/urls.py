@@ -1,7 +1,12 @@
-from django.urls import path, include
+from django.urls import path
 
-from .views import HomePageView, AboutPageView, BooksListPageView, BookDetailView, AuthorDetailView, FarmPageView,\
-    books_to_csv, MovieListWithForm
+from .views import HomePageView, AboutPageView, BooksListPageView, BookDetailView, AuthorDetailView, \
+    FarmPageView, \
+    books_to_csv, \
+    movie_list_and_create
+
+# MovieListWithForm, \
+
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
@@ -11,7 +16,6 @@ urlpatterns = [
     path('author/<int:pk>', AuthorDetailView.as_view(), name='author-detail-view'),
     path('farm/', FarmPageView.as_view(), name='farm'),
     path('export/books-to-csv/', books_to_csv, name='books_to_csv'),
-    path('movies', MovieListWithForm.as_view(), name='movies_list'),
-
+    path('movies', movie_list_and_create, name='movies_list'),
 
 ]

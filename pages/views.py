@@ -1,15 +1,11 @@
 import csv
 
-from django.db.models.query_utils import Q
-from django.http import Http404, HttpResponse
-from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.shortcuts import render
 from django.views import generic
 from django.views.generic import TemplateView, ListView
-from django.views.generic.edit import ModelFormMixin
 
-from backend.models import CustomUser, Book, Author, Movie
-
-
+from backend.models import Book, Author, Movie
 # from .forms import
 from pages.forms import MovieForm
 
@@ -78,30 +74,11 @@ def books_to_csv(request):
     return response
 
 
-class MovieListWithForm(ListView, ModelFormMixin):
-    model = Movie
-    form_class = MovieForm
-    template_name = 'pages/movie_list.html'
+def movie_list_and_create(request):
+    form = MovieForm(request.POST or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        form = MovieForm()
 
-    def get(self, request, *args, **kwargs):
-        self.object = None
-        self.form = self.get_form(self.form_class)
-        return ListView.get(self, request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        # When the form is submitted, it will enter here
-        self.object = None
-        self.form = self.get_form(self.form_class)
-
-        if self.form.is_valid():
-            self.object = self.form.save()
-            self.form = MovieForm()
-
-        return self.get(request, *args, **kwargs)
-
-    def get_context_data(self, *args, **kwargs):
-        # Just include the form
-        context = super(MovieListWithForm, self).get_context_data(*args, **kwargs)
-        context['form'] = self.form
-        context['list'] = Movie.objects.all().order_by('votes')
-        return context
+    movie_list = Movie.objects.all()
+    return render(request, 'pages/movie_list.html', {'list': movie_list, 'form': form})
